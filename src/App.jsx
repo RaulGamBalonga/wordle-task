@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [word, setWord] = useState("");
-  const [playingFile, setPlayingFile] = useState(0);
+  // const [playingFile, setPlayingFile] = useState(0);
   const [celda, setCelda] = useState(0);
   const tableroRef = useRef([]).current;
 
@@ -129,7 +129,7 @@ function App() {
                         type="text"
                         value={elem}
                         autoFocus={index == 0}
-                        onChange={() => false}
+                        onChange={() => console.log('me pinto')}
                         ref={(e) => tableroRef.push(e)}
                         id={`${elemt}-${elem}`}
                         style={{ display: "none", border: "1px solid red" }}

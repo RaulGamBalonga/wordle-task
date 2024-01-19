@@ -8,53 +8,18 @@ function App() {
   const tableroRef = useRef([]).current;
 
   useEffect(() => {
-    fetch("https://random-word-api.herokuapp.com/word?length=5")
-      .then((response) => response.body)
-      .then((rb) => {
-        const reader = rb.getReader();
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://random-word-api.herokuapp.com/word?length=5");
+        const data = await response.json();
+        const result = data[0];
+        setWord(result);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
 
-        return new ReadableStream({
-          start(controller) {
-            // The following function handles each data chunk
-            function push() {
-              // "done" is a Boolean and value a "Uint8Array"
-              reader.read().then(({ done, value }) => {
-                // If there is no more data to read
-                if (done) {
-                  controller.close();
-                  return;
-                }
-                // Get the data and send it to the browser via the controller
-                controller.enqueue(value);
-
-                push();
-              });
-            }
-
-            push();
-          },
-        });
-      })
-      .then((stream) =>
-        // Respond with our stream
-        new Response(stream, {
-          headers: { "Content-Type": "text/html" },
-        }).text()
-      )
-      .then((result) => {
-        // Do things with result
-        setWord(
-          result
-            .replace("[", "")
-            .replace("]", "")
-            .replace('"', "")
-            .replace('"', "")
-        );
-        // let regex =
-        //   /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s[a-zA-ZÀ-ÿ\u00f1\u00d1])*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/g;
-        // return regex.exec(nombre)[0];
-      })
-      .catch((error) => console.log("Error", error));
+    fetchData();
   }, []);
 
   const teclado = [

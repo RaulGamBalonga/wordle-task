@@ -34,15 +34,17 @@ function App() {
     console.log(">>>", tablero[0]);
     console.log("CELDA", celda);
 
-    if (tablero[celda].value.toUpperCase() === target.textContent) {
-      tablero[celda].value = target.textContent;
-      tablero[celda].style.backgroundColor = "green";
-    } else if (word.toUpperCase().includes(target.textContent)) {
-      tablero[celda].value = target.textContent;
-      tablero[celda].style.backgroundColor = "yellow";
-    } else tablero[celda].value = target.textContent;
+    let celdaTablero = tablero[celda];
 
-    tablero[celda].style.display = "block";
+    if (celdaTablero.value.toUpperCase() === target.textContent) {
+     celdaTablero.value = target.textContent;
+      celdaTablero.style.backgroundColor = "green";
+    } else if (word.toUpperCase().includes(target.textContent)) {
+      celdaTablero.value = target.textContent;
+     celdaTablero.style.backgroundColor = "yellow";
+    } else celdaTablero.value = target.textContent;
+
+    celdaTablero.style.display = "block";
     /**
      *  Que estto no es siempre asi hay veces que necesitamos dos vocales o dos letras
      *  target.disabled = true
